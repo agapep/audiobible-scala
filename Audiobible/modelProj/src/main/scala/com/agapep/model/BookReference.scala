@@ -40,7 +40,7 @@ case class BookReference(
   }
 
 
-  override val toString: String = {
+  override lazy val toString: String = {
     val completeList = isbn :: chapter :: {
       refType match {
         case TYPE_CHAPTER => Nil
@@ -58,9 +58,9 @@ case class BookReference(
   def isVersionReference: Boolean = refType >= TYPE_VERSION //tested
   def isAudioReference: Boolean = refType >=TYPE_AUDIO //tested
 
-  def toChapterReference = new BookReference(isbn, chapter)
+  def toChapterReference = new BookReference(isbn, chapter) //
   def toFileReference = new BookReference(isbn, chapter, chapterVersion, fileId)
-  val toAudioSourceFileString = toFileReference.toString //TODO mało wydajnie
+  lazy val toAudioSourceFileString = toFileReference.toString //TODO mało wydajnie
 
   //TODO test
   def fileEquals(last: BookReference): Boolean = {
