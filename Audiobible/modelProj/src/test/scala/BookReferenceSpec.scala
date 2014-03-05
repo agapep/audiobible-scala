@@ -5,7 +5,7 @@ import scala.util.{Success, Try, Failure}
 /**
  * Created by slovic on 05.03.14.
  */
-class BookReferenceTest extends FlatSpec with Matchers {
+class BookReferenceSpec extends FlatSpec with Matchers {
 
   def withGuard[T] (ref: => T,
                  onSucc: => (T) => Any = (c:T) => c,
