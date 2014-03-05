@@ -29,9 +29,9 @@ abstract class CacheManager extends Observable {
    * @return jedna z predefiniowanych stałych (STATE_UNDOWNLOADED, STATE_DOWNLOADED, STATE_DOWNLOADING
    *         STATE_ERROR, STATE_CANCEL, STATE_DOWNLOADED_PARTIALY) zapisanych za pomocą setState(ref)
    */
-  def getState(ref: BookReference2): Int
+  def getState(ref: BookReference): Int
 
-  def setState(ref: BookReference2, state: Int) {
+  def setState(ref: BookReference, state: Int) {
 //    if (logger) {
 //      if (state == STATE_DOWNLOADED) L.og(c, L.FLAG_FINISH_DOWNLOAD, ref)
 //      else if (state == STATE_DOWNLOADING) L.og(c, L.FLAG_START_DOWNLOAD, ref)
@@ -41,14 +41,14 @@ abstract class CacheManager extends Observable {
     notifyObservers(ref)
   }
 
-  def getProgress(ref: BookReference2): Int
+  def getProgress(ref: BookReference): Int
 
   /**
    * zapisuje do bazy danych progress pobierania pliku oznaczonego przez ref.
    * @return czy jest inny niż ten który jest zapisany do tej pory.
    *         (jeśli nie to nie potrzeba odświerzać widoków)
    */
-  def setProgress(ref: BookReference2, progress: Int): Boolean = {
+  def setProgress(ref: BookReference, progress: Int): Boolean = {
     progressObservable.notifyObservers(ref)
     return true
   }
@@ -58,7 +58,7 @@ abstract class CacheManager extends Observable {
    * @param b  instancja PŚ z którego chcemy wyczyścić dane
    */
   def clear(b: Book) {
-    val ref: BookReference2 = b.start
+    val ref: BookReference = b.start
 //    L.og(c, L.FLAG_DELETE_ALL_FILES, ref)
     notifyObservers(ref)
   }
@@ -68,12 +68,12 @@ abstract class CacheManager extends Observable {
    * @param b instancja PŚ z którego chcemy wyczyścić dane
    * @param ref miejsce które chcemy wyczyścić.
    */
-  def clear(b: Book, ref: BookReference2) {
+  def clear(b: Book, ref: BookReference) {
 //    L.og(c, L.FLAG_DELETE_FILE, ref)
     notifyObservers(ref)
   }
 
-  def getAudioRef(b: Book, ref: BookReference2): BookReference2 = {
+  def getAudioRef(b: Book, ref: BookReference): BookReference = {
     return ref
   }
 

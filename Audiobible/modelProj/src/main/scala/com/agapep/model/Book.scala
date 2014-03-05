@@ -116,7 +116,7 @@ class Book(
   val audioSources: List[AudioSource] //lista plików audio
   ) extends Cache {
     override val path: File = new File("/home/slovic/IdeaProjects/AudioBibleScala/src/main/res/")
-    lazy val start = new BookReference2(isbn,0,0,0)
+    lazy val start = new BookReference(isbn,0,0,0)
     val isbn: BigInt = info.isbn
     val  name: String = info.name
     lazy val audioSourcesV = audioSources.groupBy(_.version)
@@ -171,7 +171,7 @@ object Main extends App {
 //    val book = Book(BookInfo(BigInt("9788370144197") ,"Pismo Święte") , file.getLines().toList)
     //println (book.audioSourcesV(book.versions(0)))
 
-    val bar = BookReference2("9788370144197/0/0/0/1/2");
+    val bar = BookReference("9788370144197/0/0/0/1/2");
     printf (bar.toString + "\n")
 //    printf (Try(BookReference2("9788370144197/0a")).toString)
     //    for {
