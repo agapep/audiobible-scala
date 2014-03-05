@@ -12,7 +12,7 @@ class BookTestSpec extends FlatSpec with Matchers {
     Book(BookInfo(BigInt("9788370144197") ,"Pismo Święte"), path.getLines().toList)
   }
 
-  "A Book" should "can be constructed from file stream without data" in {
+  "A Book" should "be able to be constructed from file stream without data" in {
     val book = Book(BookInfo(BigInt("9788370144197") ,"Pismo Święte"), Nil)
     book.isbn should be (BigInt("9788370144197"))
     book.name should be ("Pismo Święte")

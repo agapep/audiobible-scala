@@ -171,8 +171,8 @@ object Main extends App {
 //    val book = Book(BookInfo(BigInt("9788370144197") ,"Pismo Święte") , file.getLines().toList)
     //println (book.audioSourcesV(book.versions(0)))
 
-    val bar = BookReference("9788370144197/0/0/0/1/2");
-    printf (bar.toString + "\n")
+    val bar = BookReference("9788370144197/0/0/0/1///");
+    printf (bar + "\n")
 //    printf (Try(BookReference2("9788370144197/0a")).toString)
     //    for {
 //      chapter <- book.chapters.find(_.abbr == "Rdz")

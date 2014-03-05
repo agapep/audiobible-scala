@@ -30,6 +30,7 @@ case class BookReference(
          time: Long = -1,
          timeEnd: Long = -1 ) {
   import BookReference._
+
   //tested
   val refType = {
     if (chapterVersion < 0) TYPE_CHAPTER
@@ -39,7 +40,7 @@ case class BookReference(
     else TYPE_AUDIO_PART
   }
 
-
+  //tested
   override lazy val toString: String = {
     val completeList = isbn :: chapter :: {
       refType match {
@@ -58,11 +59,14 @@ case class BookReference(
   def isVersionReference: Boolean = refType >= TYPE_VERSION //tested
   def isAudioReference: Boolean = refType >=TYPE_AUDIO //tested
 
-  def toChapterReference = new BookReference(isbn, chapter) //
-  def toFileReference = new BookReference(isbn, chapter, chapterVersion, fileId)
+  def toChapterReference = new BookReference(isbn, chapter) //tested
+
+  //tested
+  def toFileReference = if (refType >= TYPE_AUDIO) new BookReference(isbn, chapter, chapterVersion, fileId)
+    else throw new UnsupportedOperationException("toFileReference can be called only for references witch are >= TYPE_AUDIO")
   lazy val toAudioSourceFileString = toFileReference.toString //TODO mało wydajnie
 
-  //TODO test
+  //tested
   def fileEquals(last: BookReference): Boolean = {
     if (last == null) return false
     else last.toFileReference.equals(this.toFileReference)
