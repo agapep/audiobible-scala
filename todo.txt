@@ -1,0 +1,49 @@
+to implement:
+    - Help
+    - ProgressKeeper i CacheManager zapisują dane dla wielu książek {
+        można to zaimplementować na kilka sposobów. Jednym z nich jest umożliwienie zapisywania
+        danych dla różnych książek w ramach istniejącej implementacji. Drugi sposób to stworzyć
+        MultiCacheManager który będzie implementował interface CacheManager ale będzie wykonywał
+        akcje na instancjach CacheManagerówSP (osobna instancja do osobnej książki).
+    }
+    - LogPage {
+	    - W ustawieniach czy chcesz trzymać logi.
+	    - Wszystkie błędy pobierania, początki odtważania, początki i końce pobierania, autozmiana.
+    }
+    - Pobieranie {
+    	- Activity posiadające listę pobieranych obecnie plików.
+    }
+    - jakoś zaznaczyć progress słuchania konkretnej księgi. {
+        Padło kilka propozycji. Jedna to Pasek obok skrutu (pionowy przylegający) koloru odpowiednio
+        ciemnoniebieskiego, jasnoniebieskiego lub szarego (odsłuchane, słuchane, nie_zaczęte).
+        Drugi pomysł zakładał istnienie progressbara ale z tym to już trochę zachodu.
+    }
+    - dodać widok do widgetu.
+    - menu dla całej księgi (pobierz|usuń całą księgę, informacje)
+    - fileManager (wybór z dostępnych opcji gdzie chcemy trzymać nasze pliki)
+
+feature:
+    - Modlitwa w drodze.
+    - ewangelia na każdy dzień.
+    - inne nagrania.
+
+to implement tests:
+    - BibleAudioReference (all states cast to str).
+    - BibleAudioReference (clone) //TODO
+    - #Bible.next() //sometimes crash
+
+to test:
+
+to test content:
+    - komentarze do ksiąg królewskich i machabejskich
+    - sprawdzić lamentacje i księge Barucha
+
+errors:
+    - nie zawsze player działa. Przy wchodzeniu z widgetu progress się nie pojawia.
+    - brak jakichkolwiek komunikatów.
+    - wydaje mi się że raz DUT zabił service gdy wyszedłem z aplikacji.
+    - (brak dostępu do karty SD.) Nie wyświetla się żaden komunikat.
+    - w katalogu layout znajdują się dwa pliki bg_* które powinny być gdzieś w drawable prawdopodobnie.
+
+
+

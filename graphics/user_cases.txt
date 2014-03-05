@@ -1,0 +1,4 @@
+UC1: Użytkownik chce odsłuchać cokolwiek.
+- U_ uruchamia aplikacje
+- U_ naciska przycisk play.
+- S_ odtwarza jakiś plik audio.

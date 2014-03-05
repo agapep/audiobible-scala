@@ -1,0 +1,7 @@
+1.1.4:
+
+naprawiono:
+    - błąd który powodował pojawianie się zbyd wielu Fragmentów gdy otworzono aplikacje z widgetu.
+    Błąd pojawiał się tylko po kilkukrotnym obruceniu telefonu.
+    - błąd związany z nieprawidłowym wyświetlaniem pobierania plików. Animacja ikonki pobierania
+    nie zatrzymywała się gdy anulowano pobieranie.
