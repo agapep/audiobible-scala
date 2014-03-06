@@ -9,9 +9,10 @@ trait Cache {
   val path: File
   private val cache = collection.mutable.Map[Cacheable, File]()
 
-  def cacheFile(item:Cacheable) =
-    cache.getOrElseUpdate(item, new File(path, item.path))
-  def exists(item:Cacheable) = cacheFile(item).exists()
+  //return file connected to cached item.
+  //you can write or read them.
+  def cacheFile(item:Cacheable) = cache.getOrElseUpdate(item, new File(path, item.path))
+  def existsFile(item:Cacheable) = cacheFile(item).exists()
 }
 
 trait Cacheable {

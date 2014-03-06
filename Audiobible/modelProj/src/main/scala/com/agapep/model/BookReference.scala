@@ -1,6 +1,6 @@
 package com.agapep.model
 
-object BookReference {
+object BookReference  {
   val TYPE_BOOK: Int = 0
   val TYPE_CHAPTER: Int = 1
   val TYPE_VERSION: Int = 2

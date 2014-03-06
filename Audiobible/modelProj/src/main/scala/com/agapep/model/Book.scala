@@ -113,13 +113,17 @@ class Book(
   val chapters: List[Chapter], //Lista rozdziałów
   val chapterTypes:List[ChapterType], // typy rozdziałów (w pś będą to księgi historyczne/ mądrościowe)
   val versions:List[ChapterVersion], // lista wersji plików audio. Domyślnie są dwie cała/podzielona
-  val audioSources: List[AudioSource] //lista plików audio
+  val sources: List[AudioSource] //lista plików audio
   ) extends Cache {
     override val path: File = new File("/home/slovic/IdeaProjects/AudioBibleScala/src/main/res/")
     lazy val start = new BookReference(isbn,0,0,0)
     val isbn: BigInt = info.isbn
     val  name: String = info.name
-    lazy val audioSourcesV = audioSources.groupBy(_.version)
+
+    //helpers. provide list
+    lazy val sourcesV = sources.groupBy(_.version)
+    lazy val sourcesC = sources.groupBy(_.chapter)
+    lazy val sourcesCV = sourcesC.map(sC => (sC._1, sC._2.groupBy(_.version)) )
 
     private def next[A](col: List[A], elem:A): A = {
       val pos = col.indexOf(elem) + 1
@@ -135,17 +139,26 @@ class Book(
     def nextChapter(c: Chapter) = next(chapters, c)
     def prevChapter(c: Chapter) = prev(chapters, c)
 
-    def nextSource(s: AudioSource) = next(audioSourcesV(s.version), s)
-    def prevSource(s: AudioSource) = prev(audioSourcesV(s.version), s)
+    def nextSource(s: AudioSource) = next(sourcesV(s.version), s)
+    def prevSource(s: AudioSource) = prev(sourcesV(s.version), s)
+
+    def getRef(c: Chapter):BookReference = new BookReference(
+      c.book.isbn,
+      chapters.indexOf(c))
+
+  /**
+   * W niektórych przypadkach będziemy używać pliku referencji do manipulowania
+   * na danych. Pliki ref mogą w łatwy sposób być rzutowane na AudioSource, Chapter
+   * ChapterVersion TODO auto
+   * @param s opis pliku audio
+   * @return plik referencji do wybranego pliku audio
+   */
+    def getRef(s: AudioSource):BookReference = getRef(s.chapter).copy(
+      chapterVersion = versions.indexOf(s.version),
+      fileId = sourcesCV(s.chapter)(s.version).indexOf(s))
   }
 
-
-
-
-
 case class BookInfo (val isbn: BigInt,val  name: String)
-
-
 
 //Tomy są po to aby odróżniać
 case class Tome(name: String)
@@ -157,28 +170,10 @@ case class ChapterVersion(name:String)
 
 case class ChapterType(name:String = "")
 
-case class AudioSource(chapter: Chapter, version: ChapterVersion, url: String, name: String, time: Long) extends Cacheable {
+case class AudioSource(chapter: Chapter, version: ChapterVersion, url: String, name: String, time: Long)
+  extends Cacheable with Cached {
   override lazy val path: String = List[String](chapter.book.isbn.toString, chapter.abbr, version.name, name).
     mkString("/") + ".mp3"
-}
-
-object Main extends App {
-  def path = Source.fromURL(getClass.getResource("/www_biblia_mp3_pl.csv"))
-  override def main(args: Array[String]): Unit = {
-    import MeasureTime._
-    super.main(args)
-    val file = path
-//    val book = Book(BookInfo(BigInt("9788370144197") ,"Pismo Święte") , file.getLines().toList)
-    //println (book.audioSourcesV(book.versions(0)))
-
-    val bar = BookReference("9788370144197/0/0/0/1///");
-    printf (bar + "\n")
-//    printf (Try(BookReference2("9788370144197/0a")).toString)
-    //    for {
-//      chapter <- book.chapters.find(_.abbr == "Rdz")
-//      source <- book.audioSources.filter(_.chapter == chapter)
-//    } println(  book.cacheFile(source) )
-  }
 }
 
 object CsvBookConst {
