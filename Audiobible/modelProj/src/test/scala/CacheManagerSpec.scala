@@ -9,7 +9,10 @@ import org.scalatest.time.{Milliseconds, Millis}
 import scala.collection.immutable.IndexedSeq
 import scala.collection.mutable
 import scala.collection.script.Message
+import scala.slick.driver.SQLiteDriver.simple._
 import org.scalatest.time.SpanSugar._
+import scala.io.Source
+
 /**
  * Created by slovic on 05.03.14.
  */
@@ -40,6 +43,11 @@ class CacheManagerSpec extends FlatSpec with MockFactory with Timeouts with Matc
       str.synchronized( str.wait() )
     }
 
+  }
+
+  "Database" should "be able to be created" in {
+    lazy val db = Database.forURL("jdbc:sqlite:" +
+      Source.fromURL(getClass.getResource("/database.db")).toString() , driver = "org.sqldroid.SQLDroidDriver")
   }
 
   // Default implementation in trait Suite
