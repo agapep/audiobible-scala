@@ -18,7 +18,7 @@ object CacheManager {
   val STATE_DOWNLOADED_PARTIALY: Int = 9
 }
 
-abstract class CacheManager extends Observable {
+trait CacheManager extends Observable {
   import CacheManager._
 
   val progressObservable: ProgressObservable = new ProgressObservable

@@ -10,7 +10,8 @@ object ThisBuild extends Build {
     id = "modelProj",
     base = file("./modelProj"),
     settings =  Defaults.defaultSettings ++ Seq (
-      libraryDependencies += "org.scalatest" %% "scalatest" % "2.0" ,
+      libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.0" ,
+      libraryDependencies += "org.scalamock" %% "scalamock-scalatest-support" % "3.1.RC1" % "test",
       scalaVersion := "2.10.2"
     )
   )
