@@ -23,14 +23,20 @@ class CacheStore[A ,B](defo: B) extends mutable.HashMap[A, B] with mutable.Obser
   subscribe(sub)
   lazy val sub = new Sub {
     override def notify(pub: Pub, event: Message[(A, B)] with mutable.Undoable): Unit = event match {
-      case Include => println(event)
-      case Remove => println(event)
-      case Reset  => println(event)
-      case Update  => println(event)
+      case _:Include[_] => println(event)
+      case _:Remove[_] => println(event)
+      case _:Reset[_] => println(event)
+      case _:Update[_] => println(event)
       //TODO update databese
     }
   }
 }
+//
+//class DB {
+//  lazy val db = Database.forURL("jdbc:sqlite:" +
+//    getApplicationContext().getFilesDir() +
+//    "slick-sandbox.txt", driver = "org.sqldroid.SQLDroidDriver")
+//}
 
 trait Cached {
   def toCached = toString()
